@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block body %}
+  <center>
+    <h1>Inventory Detail</h1>
+    <div class="card mb-3" style="max-width: 540px; margin-top: 100px;">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img src="https://picsum.photos/200/300.jpg" class="img-fluid rounded-start" alt="...">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">{{object.name}}</h5>
+            <p class="card-text">Supplier :- <b>{{object.supplier}}</b></p>
+            <p class="card-text">{{object.description}}</p>
+            <p class="card-text"><small class="text-muted">{{object.note}}</small></p>
+            <p class="card-text">Quantity :- <b>{{object.stock}}</b> pieces</p>
+            <p class="card-text">{% if object.availability %} In Stock {% else %} Out Of Stock {% endif %}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a href="{% url 'inventory' %}">Back</a>
+  </center>
+{% endblock body %}

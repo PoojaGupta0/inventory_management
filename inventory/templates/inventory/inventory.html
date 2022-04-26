@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div class="container mt-3">
+        <h2>Inventory List</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Item name</th>
+                    <th>availability</th>
+                    <th>supplier</th>
+                </tr>
+            </thead>
+            <tbody id="inventory-table">
+            </tbody>
+        </table>
+    </div>
+{% endblock body %}
+
+{% block js %}
+<script>
+    $(document).ready(function(){
+        $.ajax({
+        type: "GET",
+        url: `/api/inventory/`,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(result) {
+                if(result){
+                    $.each(result, function (index, val) {
+                        if(val.availability){
+                            var availability = "Yes"
+                        }else{
+                            var availability = "No"
+                        }
+                    var page_link = `/inventory/${val.id}` 
+                    console.log(page_link)
+                    $("#inventory-table").append(
+                        `<tr>
+                            <td><a href=${page_link}>${val.name}</a></td>
+                            <td>${availability}</td>
+                            <td>${val.supplier_name}</td>
+                        </tr>`
+                        );
+                    });
+                }
+                else{
+                    $("#inventory-table").text('No data found');
+                }
+            }
+        });
+    })
+</script>
+{% endblock js %}
